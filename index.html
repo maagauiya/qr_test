@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Display from URL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #fafafa;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    .content {
+      max-width: 100%;
+      word-wrap: break-word;
+      font-size: 2.5rem; /* default size */
+    }
+
+    .content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .content {
+        font-size: 3rem; /* bigger text for tablets & large phones */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .content {
+        font-size: 3.5rem; /* even bigger for small phones */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="content" id="displayArea"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const display = document.getElementById("displayArea");
+
+    if (params.has("img")) {
+      const img = document.createElement("img");
+      img.src = params.get("img");
+      img.alt = "Image from URL";
+      display.appendChild(img);
+    } else if (params.has("text")) {
+      display.textContent = decodeURIComponent(params.get("text"));
+    } else {
+      display.textContent = "Add ?text=Hello or ?img=images/meme.gif to the URL";
+    }
+  </script>
+</body>
+</html>
